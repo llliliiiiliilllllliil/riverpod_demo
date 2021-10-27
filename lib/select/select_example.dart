@@ -1,12 +1,11 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final ChangeNotifierProvider<Person> personProvider = ChangeNotifierProvider((_) => Person());
+final ChangeNotifierProvider<Person> personProvider =
+    ChangeNotifierProvider((_) => Person());
 
 class Person extends ChangeNotifier {
   int _age = 0;
@@ -16,7 +15,7 @@ class Person extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _name = 'weilu';
+  String _name = 'lin';
   String get name => _name;
   set name(String name) {
     _name = name;
@@ -24,31 +23,30 @@ class Person extends ChangeNotifier {
   }
 }
 
-class SelectExample extends StatelessWidget {
+class SelectExample extends ConsumerWidget {
+  const SelectExample({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Example'),
+        title: const Text('Select Example'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            HookBuilder(
-              builder: (_) {
-                String name = useProvider(personProvider.select((p) => p.name));
-                /// 如果使用下面的方式，则age变化时，这里的Text也会刷新。
-//                String name = useProvider(personProvider).name;
+            Consumer(
+              builder: (ctx, r, _) {
+                String name = r.watch(personProvider.select((p) => p.name));
                 return Text(
                   'name:$name',
                 );
               },
             ),
-            HookBuilder(
-              builder: (_) {
-                int age = useProvider(personProvider.select((p) => p.age));
+            Consumer(
+              builder: (ctx, r, _) {
+                int age = r.watch(personProvider.select((p) => p.age));
                 return Text(
                   'age:$age',
                 );
@@ -59,11 +57,11 @@ class SelectExample extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         // 这里age变化时，只有对应的Text会变化。
-        onPressed: () => context.read(personProvider).age = Random.secure().nextInt(100),
+        onPressed: () =>
+            ref.read(personProvider).age = Random.secure().nextInt(100),
         tooltip: 'Refresh',
-        child: Icon(Icons.refresh),
+        child: const Icon(Icons.refresh),
       ),
     );
   }
-
 }

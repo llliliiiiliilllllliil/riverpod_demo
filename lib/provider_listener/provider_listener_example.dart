@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:traning/state_provider/state_provider_example.dart';
 
-class ProviderListenerExample extends StatelessWidget {
+class ProviderListenerExample extends ConsumerWidget {
   const ProviderListenerExample({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ProviderListener'),
@@ -26,9 +26,9 @@ class ProviderListenerExample extends StatelessWidget {
                 }
               },
               child: Consumer(
-                builder: (context, watch, _) {
+                builder: (context, r, _) {
                   /// 使用Consumer(ConsumerWidget的封装)，控制刷新的范围。
-                  int count = watch(stateProvider).state;
+                  int count = r.watch(stateProvider).state;
                   return Text(
                     '$count',
                     style: Theme.of(context).textTheme.headline4,
@@ -41,7 +41,7 @@ class ProviderListenerExample extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         /// 使用read获取counterProvider，操作state。
-        onPressed: () => context.read(stateProvider).state++,
+        onPressed: () => ref.read(stateProvider).state++,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

@@ -25,11 +25,11 @@ class Counter extends ChangeNotifier {
   }
 }
 
-class ChangeProviderNotifierExample extends StatelessWidget {
+class ChangeProviderNotifierExample extends ConsumerWidget {
   const ChangeProviderNotifierExample({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ChangeNotifierProvider'),
@@ -42,8 +42,8 @@ class ChangeProviderNotifierExample extends StatelessWidget {
               'You have pushed the button this many times:',
             ),
             Consumer(
-              builder: (context, watch, _) {
-                int count = watch(changeNotifierProvider).count;
+              builder: (ctx, r, _) {
+                int count = r.watch(changeNotifierProvider).count;
                 return Text(
                   '$count',
                   style: Theme.of(context).textTheme.headline4,
@@ -55,7 +55,7 @@ class ChangeProviderNotifierExample extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         /// 使用read获取counterProvider。
-        onPressed: () => context.read(changeNotifierProvider).increment(),
+        onPressed: () => ref.read(changeNotifierProvider).increment(),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

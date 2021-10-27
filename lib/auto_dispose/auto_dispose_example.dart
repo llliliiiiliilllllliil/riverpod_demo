@@ -9,11 +9,11 @@ final autoStateProvider = StateProvider.autoDispose((ref) {
   return 0;
 });
 
-class AutoDisposeExample1 extends StatelessWidget {
+class AutoDisposeExample1 extends ConsumerWidget {
   const AutoDisposeExample1({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('AutoDispose'),
@@ -26,8 +26,8 @@ class AutoDisposeExample1 extends StatelessWidget {
               'You have pushed the button this many times:',
             ),
             Consumer(
-              builder: (context, watch, _) {
-                int count = watch(autoStateProvider).state;
+              builder: (ctx, r, _) {
+                int count = r.watch(autoStateProvider).state;
                 return Text(
                   '$count',
                   style: Theme.of(context).textTheme.headline4,
@@ -38,7 +38,7 @@ class AutoDisposeExample1 extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read(autoStateProvider).state++,
+        onPressed: () => ref.read(autoStateProvider).state++,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

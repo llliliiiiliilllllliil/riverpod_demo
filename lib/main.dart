@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:traning/provider_observer.dart';
-import 'package:traning/scope_provider/scope_provider_example.dart';
 import 'auto_dispose/auto_dispose_example.dart';
 import 'auto_dispose/auto_dispose_future_example.dart';
 import 'change_notifier_provider/change_notifier_provider_example.dart';
@@ -18,16 +16,7 @@ import 'state_provider/state_provider_example.dart';
 import 'stream_provider/stream_provider_example.dart';
 
 void main() {
-  runApp(
-    // 添加“ProviderScope”。所有使用Riverpod的Flutter程序都必须
-    // 在widget tree的根部添加它，用来储存各个provider。
-    ProviderScope(
-      child: const MyApp(),
-      observers: [
-        MyProviderObserver(),
-      ],
-    ),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -58,8 +47,8 @@ class HomePage extends StatelessWidget {
       body: ListView(
         children: [
           const _ListTile(title: 'Provider', page: ProviderExample()),
-          _ListTile(title: 'StateProvider', page: StateProviderExample()),
-          _ListTile(
+          const _ListTile(title: 'StateProvider', page: StateProviderExample()),
+          const _ListTile(
             title: 'StateNotifierProvider',
             page: StateProviderNotifierExample(),
           ),
@@ -71,7 +60,8 @@ class HomePage extends StatelessWidget {
             title: 'FutureProvider',
             page: FutureProviderExample(),
           ),
-          _ListTile(title: 'StreamProvider', page: StreamProviderExample()),
+          const _ListTile(
+              title: 'StreamProvider', page: StreamProviderExample()),
           const _ListTile(
             title: 'ProviderListener',
             page: ProviderListenerExample(),
@@ -92,7 +82,6 @@ class HomePage extends StatelessWidget {
             page: RefreshProviderExample(),
           ),
           _ListTile(title: 'Select', page: SelectExample()),
-          const _ListTile(title: 'ScopeProvider', page: ScopeProviderExample()),
         ],
       ),
     );

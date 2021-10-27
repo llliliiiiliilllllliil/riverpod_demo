@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,20 +7,22 @@ final StreamProvider<String> streamProvider = StreamProvider((_) async* {
 });
 
 class StreamProviderExample extends StatelessWidget {
+  const StreamProviderExample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('StreamProvider'),
+        title: const Text('StreamProvider'),
       ),
       body: Center(
         child: Consumer(
-          builder: (context, watch, _) {
-            AsyncValue<String> streamProviderValue = watch(streamProvider);
+          builder: (context, ref, _) {
+            AsyncValue<String> streamProviderValue = ref.watch(streamProvider);
             return streamProviderValue.when(
-              loading: () => CircularProgressIndicator(),
-              error: (error, stack) => Text('Oops, something unexpected happened'),
+              loading: (_) => const CircularProgressIndicator(),
+              error: (error, stack, _) =>
+                  const Text('Oops, something unexpected happened'),
               data: (value) => Text(
                 'Hello $value',
                 style: Theme.of(context).textTheme.headline4,
@@ -32,5 +33,4 @@ class StreamProviderExample extends StatelessWidget {
       ),
     );
   }
-
 }

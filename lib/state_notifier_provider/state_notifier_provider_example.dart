@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final StateNotifierProvider<Counter, int> stateNotifierProvider = StateNotifierProvider<Counter, int>((_) => Counter());
+final StateNotifierProvider<Counter, int> stateNotifierProvider =
+    StateNotifierProvider<Counter, int>((_) => Counter());
 
 class Counter extends StateNotifier<int> {
   Counter() : super(0);
@@ -16,24 +16,25 @@ class Counter extends StateNotifier<int> {
   }
 }
 
-class StateProviderNotifierExample extends StatelessWidget {
+class StateProviderNotifierExample extends ConsumerWidget {
+  const StateProviderNotifierExample({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('StateNotifierProvider'),
+        title: const Text('StateNotifierProvider'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'You have pushed the button this many times:',
             ),
             Consumer(
-              builder: (context, watch, _) {
-                int count = watch(stateNotifierProvider);
+              builder: (context, r, _) {
+                int count = r.watch(stateNotifierProvider);
                 return Text(
                   '$count',
                   style: Theme.of(context).textTheme.headline4,
@@ -45,11 +46,10 @@ class StateProviderNotifierExample extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         /// 使用read获取counterProvider。
-        onPressed: () => context.read(stateNotifierProvider.notifier).increment(),
+        onPressed: () => ref.read(stateNotifierProvider.notifier).increment(),
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
-
 }

@@ -7,17 +7,17 @@ final StateProvider<String> weatherProvider = StateProvider((ref) {
   return '$city (Sunny)';
 });
 
-class CombiningProviderExample2 extends StatelessWidget {
+class CombiningProviderExample2 extends ConsumerWidget {
   const CombiningProviderExample2({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('CombiningProvider')),
       body: Center(
         child: Consumer(
           builder: (context, watch, _) {
-            final String weather = watch(weatherProvider).state;
+            final String weather = ref.watch(weatherProvider).state;
             return Text(weather);
           },
         ),
@@ -25,11 +25,11 @@ class CombiningProviderExample2 extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           /// 修改状态
-          String city = context.read(cityProvider).state;
+          String city = ref.read(cityProvider).state;
           if (city == 'London') {
-            context.read(cityProvider).state = "Xi'an";
+            ref.read(cityProvider).state = "Xi'an";
           } else {
-            context.read(cityProvider).state = 'London';
+            ref.read(cityProvider).state = 'London';
           }
         },
         tooltip: 'Refresh',

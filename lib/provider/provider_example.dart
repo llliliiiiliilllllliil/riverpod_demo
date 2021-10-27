@@ -7,8 +7,8 @@ class ProviderExample extends ConsumerWidget {
   const ProviderExample({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final String value = watch(helloWorldProvider);
+  Widget build(BuildContext context, ref) {
+    final String value = ref.watch(helloWorldProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Provider')),

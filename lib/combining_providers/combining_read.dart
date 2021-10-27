@@ -8,7 +8,7 @@ final Provider<Location> locationProvider = Provider((ref) => Location(ref));
 class Location {
   Location(this._ref);
 
-  final ProviderReference _ref;
+  final ProviderRef _ref;
 
   String get label {
     final city = _ref.read(cityProvider);
@@ -21,8 +21,8 @@ class CombiningProviderExample1 extends ConsumerWidget {
   const CombiningProviderExample1({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final Location location = watch(locationProvider);
+  Widget build(BuildContext context, ref) {
+    final Location location = ref.watch(locationProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('CombiningProvider')),
